@@ -1,0 +1,42 @@
+# Python
+__pycache__/
+*.py[cod]
+*.so
+*.egg-info/
+*.log
+*.sqlite3
+.env
+.env.*
+.vscode/
+.idea/
+
+# Virtualenv
+.venv/
+venv/
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Docker
+docker-compose.override.yml
+*.dockerfile
+*.tar
+.dockerignore
+
+# Git
+.DS_Store
+*.swp
+*.swo
+
+# Logs & Caches
+logs/
+*.log
+*.out
+*.err
+nohup.out
+
+# Jupyter Notebooks
+.ipynb_checkpoints/
+
+# Ignore local config
+config.json
+settings.py
