@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Web Chat with AI</title>
+  <script src="/socket.io/socket.io.js"></script>
+  <style>
+    body { font-family: Arial, sans-serif; }
+    #chat { border: 1px solid #ccc; padding: 10px; height: 300px; overflow-y: scroll; }
+    #messageInput { width: 80%; }
+    #sendBtn { width: 18%; }
+  </style>
+</head>
+<body>
+  <h1>Web Chat with AI</h1>
+  <div id="chat"></div>
+  <input type="text" id="messageInput" placeholder="Type your message">
+  <button id="sendBtn">Send</button>
+
+  <script>
+    const socket = io();
+
+    // При подключении отправляем контактные данные
+    socket.emit('start_chat', {
+      name: "John Doe",
+      email: "john@example.com",
+      phone: "+123456789"
+    });
+
+    // Отображение входящих сообщений
+    socket.on('message', data => {
+      const chatDiv = document.getElementById('chat');
+      const msg = document.createElement('p');
+      msg.innerHTML = `<strong>${data.from}:</strong> ${data.text}`;
+      chatDiv.appendChild(msg);
+      chatDiv.scrollTop = chatDiv.scrollHeight;
+    });
+
+    // Отправка сообщения
+    document.getElementById('sendBtn').addEventListener('click', () => {
+      const input = document.getElementById('messageInput');
+      const text = input.value;
+      if (text.trim() === "") return;
+      socket.emit('message', text);
+      const chatDiv = document.getElementById('chat');
+      const msg = document.createElement('p');
+      msg.innerHTML = `<strong>You:</strong> ${text}`;
+      chatDiv.appendChild(msg);
+      chatDiv.scrollTop = chatDiv.scrollHeight;
+      input.value = "";
+    });
+  </script>
+</body>
+</html>
